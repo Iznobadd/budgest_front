@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PublicRoute from "./PublicRoute";
-import PrivateRoute from "./PrivateRoute";
 import Private from "../pages/Private";
 import Home from "../pages/Home";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        element: <PrivateRoute />,
+        element: <DashboardLayout />,
         children: [
           {
             path: "/private",
