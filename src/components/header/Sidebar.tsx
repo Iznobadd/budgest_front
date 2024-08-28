@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Logo from "../assets/images/logo.svg";
+import Logo from "../../assets/images/logo.svg";
 import { menu } from "./Menu";
-import { MenuItem, SidebarProps } from "../types";
+import { MenuItem, SidebarProps } from "../../types";
 import { IoArrowBack, IoChevronForward } from "react-icons/io5";
 import { useState } from "react";
 const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {

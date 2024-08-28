@@ -1,6 +1,6 @@
 import { IoMdAirplane } from "react-icons/io";
 import { IoAccessibility, IoMagnet } from "react-icons/io5";
-import { MenuItem } from "../types";
+import { MenuItem } from "../../types";
 
 export const menu: MenuItem[] = [
   {

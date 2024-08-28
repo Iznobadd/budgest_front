@@ -1,7 +1,7 @@
 import { IoMdMenu } from "react-icons/io";
-import { SidebarProps } from "../types";
+import { SidebarProps } from "../../types";
 import { Link } from "react-router-dom";
-import Logo from "../assets/images/logo.svg";
+import Logo from "../../assets/images/logo.svg";
 const Header = ({ isOpen, toggleSidebar }: SidebarProps) => {
   return (
     <div

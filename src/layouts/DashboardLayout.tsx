@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
+import Header from "../components/header/Header";
+import Sidebar from "../components/header/Sidebar";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 
