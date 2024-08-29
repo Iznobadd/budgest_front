@@ -7,7 +7,7 @@ export interface SubMenu {
 
 export interface MenuItem {
   name: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   link: string;
   hasSub: boolean;
   head: boolean;
