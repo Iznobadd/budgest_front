@@ -49,7 +49,7 @@ const DashboardLayout = () => {
             onClick={() => setOpenSidebar(false)}
           />
         )}
-        <div className="mt-16 relative p-6">
+        <div className="mt-16">
           <Outlet />
         </div>
       </div>
