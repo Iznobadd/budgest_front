@@ -39,22 +39,20 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               {menu.map((item: MenuItem, index: number) =>
                 item.head ? (
                   <li key={index} className="px-6 pt-1 pb-2">
-                    <h6 className="text-red-700 leading-5 font-bold whitespace-nowrap flex items-center gap-2">
+                    <h6 className="text-neutral-light leading-5 font-bold whitespace-nowrap flex items-center gap-2">
                       {item.icon} {item.name}
                     </h6>
                   </li>
                 ) : (
                   <li
                     key={index}
-                    className="py-1 px-3 relative"
+                    className="py-1 px-3 relative text-neutral-light"
                     onClick={() => item.hasSub && handleToggleSubMenu(index)}
                   >
                     <Link
                       to={item.link}
-                      className={`flex items-center gap-2 pr-7 py-2 pl-3 hover:bg-gray-200 transition-all duration-200 ${
-                        item.hasSub && openSubMenu === index
-                          ? "bg-gray-200"
-                          : ""
+                      className={`flex items-center gap-2 pr-7 py-2 pl-3 rounded-lg hover:bg-primary hover:text-white transition-all duration-200 ${
+                        item.hasSub && openSubMenu === index ? "bg-primary" : ""
                       }
                       }`}
                     >
