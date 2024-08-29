@@ -1,37 +1,26 @@
-import { IoMdAirplane } from "react-icons/io";
-import { IoAccessibility, IoMagnet } from "react-icons/io5";
 import { MenuItem } from "../../types";
+import { MdAccountBalance } from "react-icons/md";
+import { GrOverview } from "react-icons/gr";
 
 export const menu: MenuItem[] = [
   {
-    name: "ADMIN",
-    icon: <IoMdAirplane />,
+    name: "GENERAL",
     link: "",
     hasSub: false,
     head: true,
   },
   {
-    name: "TEST 1",
-    icon: <IoMagnet />,
-    link: "",
+    name: "Vue d'ensemble",
+    icon: <GrOverview />,
+    link: "/dashboard",
     hasSub: false,
     head: false,
   },
   {
-    name: "TEST 2",
-    icon: <IoAccessibility />,
-    link: "#",
-    hasSub: true,
+    name: "Mes comptes",
+    icon: <MdAccountBalance />,
+    link: "/dashboard/account",
+    hasSub: false,
     head: false,
-    sub: [
-      {
-        name: "Liste PRO",
-        link: "",
-      },
-      {
-        name: "Liste PART",
-        link: "",
-      },
-    ],
   },
 ];
