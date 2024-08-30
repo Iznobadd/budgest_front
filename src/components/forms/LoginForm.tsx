@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import { LoginFormData, AuthResponse, LoginSchema } from "../../types";
 import Input from "../../shared/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import usePostRequest from "../../hooks/usePostRequest";
 import Button from "../../shared/Button";
 import { useAuth } from "../../hooks/useAuth";
+import { useMutation } from "react-query";
+import { loginUser } from "../../api";
 
 const LoginForm: React.FC = () => {
   const { login } = useAuth();
@@ -16,20 +17,23 @@ const LoginForm: React.FC = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const { postRequest, loading, error } = usePostRequest<
-    LoginFormData,
-    AuthResponse
-  >("auth/login");
-
-  const onSubmit = async (data: LoginFormData) => {
-    try {
-      const response = await postRequest(data);
-      if (response && response.access_token) {
-        login(response.access_token);
+  const { mutate, error, isLoading } = useMutation<
+    AuthResponse,
+    Error,
+    LoginFormData
+  >(loginUser, {
+    onSuccess: (data) => {
+      if (data && data.access_token) {
+        login(data.access_token);
       }
-    } catch (err) {
-      console.error("Login failed", err);
-    }
+    },
+    onError: (error) => {
+      console.error("Login failed : ", error);
+    },
+  });
+
+  const onSubmit = (data: LoginFormData) => {
+    mutate(data);
   };
 
   return (
@@ -70,13 +74,13 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600">{error.message}</p>}
 
       <div>
         <Button
           type="submit"
-          disabled={loading}
-          label={loading ? "Connexion..." : "Connexion"}
+          disabled={isLoading}
+          label={isLoading ? "Connexion..." : "Connexion"}
         />
       </div>
     </form>

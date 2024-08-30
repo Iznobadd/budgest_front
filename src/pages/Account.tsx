@@ -1,26 +1,16 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import SingleAccount from "../components/accounts/SingleAccount";
-import useGetRequest from "../hooks/useGetRequest";
 import PageWrapper from "../layouts/PageWrapper";
 import { Account as AccountType } from "../types";
+import { fetchAccounts } from "../api";
 
 const Account = () => {
-  const { getRequest, loading, error } =
-    useGetRequest<AccountType[]>("accounts");
-  const [accounts, setAccounts] = useState<AccountType[] | null>(null);
-
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      try {
-        const data = await getRequest();
-        setAccounts(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchAccounts();
-  }, [getRequest]);
+  const {
+    data: accounts,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<AccountType[], Error>("accounts", fetchAccounts);
   return (
     <PageWrapper
       title="Accounts"
@@ -31,8 +21,8 @@ const Account = () => {
         },
       ]}
     >
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>Error: {error.message}</p>}
       <div className="grid grid-cols-3 text-center gap-4">
         {accounts &&
           accounts.map((account) => (

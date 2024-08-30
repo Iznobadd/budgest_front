@@ -8,8 +8,9 @@ import {
 import Input from "../../shared/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../shared/Button";
-import usePostRequest from "../../hooks/usePostRequest";
 import { useAuth } from "../../hooks/useAuth";
+import { useMutation } from "react-query";
+import { registerUser } from "../../api";
 
 const RegisterForm: React.FC = () => {
   const { login } = useAuth();
@@ -21,21 +22,24 @@ const RegisterForm: React.FC = () => {
     resolver: zodResolver(RegisterSchema),
   });
 
-  const { postRequest, loading, error } = usePostRequest<
-    RegisterFormDataToSend,
-    AuthResponse
-  >("auth/register");
-
-  const onSubmit = async (data: RegisterFormData) => {
-    try {
-      const { confirmPassword, ...dataSend } = data;
-      const response = await postRequest(dataSend);
-      if (response && response.access_token) {
-        login(response.access_token);
+  const { mutate, isLoading, error } = useMutation<
+    AuthResponse,
+    Error,
+    RegisterFormDataToSend
+  >(registerUser, {
+    onSuccess: (data) => {
+      if (data && data.access_token) {
+        login(data.access_token);
       }
-    } catch (err) {
-      console.error("Registration failed", err);
-    }
+    },
+    onError: (error) => {
+      console.error("Registration failed", error);
+    },
+  });
+
+  const onSubmit = (data: RegisterFormData) => {
+    const { confirmPassword, ...dataSend } = data;
+    mutate(dataSend);
   };
 
   return (
@@ -94,13 +98,13 @@ const RegisterForm: React.FC = () => {
         </div>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600">{error.message}</p>}
 
       <div>
         <Button
           type="submit"
-          disabled={loading}
-          label={loading ? "Inscription..." : "Inscription"}
+          disabled={isLoading}
+          label={isLoading ? "Inscription..." : "Inscription"}
         />
       </div>
     </form>
