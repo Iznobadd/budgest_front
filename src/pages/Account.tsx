@@ -30,6 +30,7 @@ const Account = () => {
               name={account.name}
               id={account.id}
               key={account.id}
+              budget={account.budget}
             />
           ))}
       </div>
