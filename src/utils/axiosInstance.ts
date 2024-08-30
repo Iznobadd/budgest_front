@@ -8,13 +8,9 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem("access_token");
-    console.log("Request token:", token);
     if (token) {
       const isExpired = isTokenExpired(token);
-      console.log("Token expired:", isExpired);
       if (isExpired) {
-        console.log("Token expired, refreshing");
-
         try {
           const response = await axios.post(
             `${import.meta.env.VITE_URL_API}auth/refresh`,
@@ -22,7 +18,6 @@ axiosInstance.interceptors.request.use(
             { withCredentials: true }
           );
           const newAccessToken = response.data.access_token;
-          console.log(newAccessToken);
           localStorage.setItem("access_token", newAccessToken);
           config.headers.Authorization = `Bearer ${newAccessToken}`;
         } catch (error) {
