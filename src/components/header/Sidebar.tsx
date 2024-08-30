@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/images/logo.svg";
 import { menu } from "./Menu";
 import { MenuItem, SidebarProps } from "../../types";
@@ -6,6 +6,7 @@ import { IoArrowBack, IoChevronForward } from "react-icons/io5";
 import { useState } from "react";
 const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const [openSubMenu, setOpenSubMenu] = useState<number | null>(null);
+  const location = useLocation();
 
   const handleToggleSubMenu = (index: number) => {
     setOpenSubMenu((prevIndex) => (prevIndex === index ? null : index));
@@ -52,6 +53,10 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
                     <Link
                       to={item.link}
                       className={`flex items-center gap-2 pr-7 py-2 pl-3 rounded-lg hover:bg-primary hover:text-white transition-all duration-200 ${
+                        location.pathname === item.link
+                          ? "bg-primary text-white"
+                          : ""
+                      } ${
                         item.hasSub && openSubMenu === index ? "bg-primary" : ""
                       }
                       }`}
