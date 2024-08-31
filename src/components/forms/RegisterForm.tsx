@@ -12,12 +12,14 @@ import { useAuth } from "../../hooks/useAuth";
 import { useMutation } from "react-query";
 import { registerUser } from "../../api";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
 
   const nextStep = () => setCurrentStep((prev) => prev + 1);
   const { login } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -34,6 +36,7 @@ const RegisterForm: React.FC = () => {
     onSuccess: (data) => {
       if (data && data.access_token) {
         login(data.access_token);
+        navigate("/dashboard");
       }
     },
     onError: (error) => {

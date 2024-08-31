@@ -6,9 +6,11 @@ import Button from "../../shared/Button";
 import { useAuth } from "../../hooks/useAuth";
 import { useMutation } from "react-query";
 import { loginUser } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,6 +27,7 @@ const LoginForm: React.FC = () => {
     onSuccess: (data) => {
       if (data && data.access_token) {
         login(data.access_token);
+        navigate("/dashboard");
       }
     },
     onError: (error) => {
