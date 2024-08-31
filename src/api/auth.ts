@@ -1,13 +1,17 @@
+import axios from "axios";
 import { AuthResponse, LoginFormData, RegisterFormDataToSend } from "../types";
-import axiosInstance from "../utils/axiosInstance";
 
 export const registerUser = async (
   data: RegisterFormDataToSend
 ): Promise<AuthResponse> => {
   try {
-    const response = await axiosInstance.post("auth/register", data, {
-      withCredentials: true,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_URL_API}auth/register`,
+      data,
+      {
+        withCredentials: true,
+      }
+    );
     return response.data;
   } catch (error: any) {
     if (error.response) {
@@ -20,9 +24,13 @@ export const registerUser = async (
 
 export const loginUser = async (data: LoginFormData): Promise<AuthResponse> => {
   try {
-    const response = await axiosInstance.post("auth/login", data, {
-      withCredentials: true,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_URL_API}auth/login`,
+      data,
+      {
+        withCredentials: true,
+      }
+    );
     return response.data;
   } catch (error: any) {
     if (error.response) {
