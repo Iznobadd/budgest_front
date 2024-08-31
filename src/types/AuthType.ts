@@ -16,6 +16,7 @@ export type RegisterFormData = {
   email: string;
   password: string;
   confirmPassword: string;
+  amount: string;
 };
 
 export type RegisterFormDataToSend = Omit<RegisterFormData, "confirmPassword">;
@@ -28,6 +29,11 @@ export const RegisterSchema = z
       .min(6, { message: "Password is too short" })
       .max(60, { message: "Password is too long" }),
     confirmPassword: z.string(),
+    amount: z
+      .union([z.string(), z.number()])
+      .refine((val) => !isNaN(parseFloat(String(val))), {
+        message: "Amount must be a valid number",
+      }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
