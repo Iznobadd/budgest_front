@@ -144,7 +144,7 @@ const RegisterForm: React.FC = () => {
           <Button
             type="button"
             label="Prochaine étape"
-            onClick={handleSubmit(validateBudget)}
+            onClick={() => validateBudget()}
           />
         )}
 
