@@ -2,6 +2,7 @@ import Balance from "../components/overview/Balance";
 import ExpenseByMonth from "../components/overview/ExpenseByMonth";
 import IncomeByMonth from "../components/overview/IncomeByMonth";
 import TargetCategoriesCard from "../components/overview/TargetCategoriesCard";
+import TransactionCard from "../components/overview/TransactionCard";
 import PageWrapper from "../layouts/PageWrapper";
 
 const Dashboard = () => {
@@ -18,7 +19,10 @@ const Dashboard = () => {
           <ExpenseByMonth />
         </div>
       </div>
-      <div className="grid grid-cols-1 text-center gap-4">
+      <div className="grid grid-cols-3 text-center gap-4">
+        <div className="w-full p-4 bg-white rounded-lg shadow-sm flex flex-col col-span-2">
+          <TransactionCard />
+        </div>
         <div className="w-full p-4 bg-white rounded-lg shadow-sm flex flex-col">
           <TargetCategoriesCard />
         </div>
