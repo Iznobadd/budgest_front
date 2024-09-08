@@ -9,7 +9,7 @@ import Input from "../../shared/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../shared/Button";
 import { useAuth } from "../../hooks/useAuth";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../../api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -28,11 +28,12 @@ const RegisterForm: React.FC = () => {
     resolver: zodResolver(RegisterSchema),
   });
 
-  const { mutate, isLoading, error } = useMutation<
+  const { mutate, isPending, error } = useMutation<
     AuthResponse,
     Error,
     RegisterFormDataToSend
-  >(registerUser, {
+  >({
+    mutationFn: registerUser,
     onSuccess: (data) => {
       if (data && data.access_token) {
         login(data.access_token);
@@ -151,8 +152,8 @@ const RegisterForm: React.FC = () => {
         {currentStep === 2 && (
           <Button
             type="submit"
-            disabled={isLoading}
-            label={isLoading ? "Inscription..." : "Inscription"}
+            disabled={isPending}
+            label={isPending ? "Inscription..." : "Inscription"}
           />
         )}
       </div>

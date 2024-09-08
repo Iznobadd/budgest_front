@@ -1,7 +1,7 @@
 import { BsGraphDownArrow } from "react-icons/bs";
 import Graph from "../../assets/images/graph.svg";
 import { RemainingBudgetResponse } from "../../types";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { remainingBudget } from "../../api";
 
 const ExpenseByMonth = () => {
@@ -10,7 +10,10 @@ const ExpenseByMonth = () => {
     isLoading,
     isError,
     error,
-  } = useQuery<RemainingBudgetResponse, Error>("remaining", remainingBudget);
+  } = useQuery<RemainingBudgetResponse, Error>({
+    queryKey: ["remaining"],
+    queryFn: remainingBudget,
+  });
   console.log(remaining);
 
   return (

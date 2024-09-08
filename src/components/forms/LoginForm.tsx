@@ -4,7 +4,7 @@ import Input from "../../shared/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../shared/Button";
 import { useAuth } from "../../hooks/useAuth";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../../api";
 import { useNavigate } from "react-router-dom";
 
@@ -19,11 +19,12 @@ const LoginForm: React.FC = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const { mutate, error, isLoading } = useMutation<
+  const { mutate, error, isPending } = useMutation<
     AuthResponse,
     Error,
     LoginFormData
-  >(loginUser, {
+  >({
+    mutationFn: loginUser,
     onSuccess: (data) => {
       if (data && data.access_token) {
         login(data.access_token);
@@ -82,8 +83,8 @@ const LoginForm: React.FC = () => {
       <div>
         <Button
           type="submit"
-          disabled={isLoading}
-          label={isLoading ? "Connexion..." : "Connexion"}
+          disabled={isPending}
+          label={isPending ? "Connexion..." : "Connexion"}
         />
       </div>
     </form>

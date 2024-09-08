@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { remainingBudget } from "../../api";
 import { RemainingBudgetResponse } from "../../types";
 import { FaWallet } from "react-icons/fa";
@@ -10,7 +10,10 @@ const Balance = () => {
     isLoading,
     isError,
     error,
-  } = useQuery<RemainingBudgetResponse, Error>("remaining", remainingBudget);
+  } = useQuery<RemainingBudgetResponse, Error>({
+    queryKey: ["remaining"],
+    queryFn: remainingBudget,
+  });
 
   return (
     <div>
